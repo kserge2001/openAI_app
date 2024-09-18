@@ -1,0 +1,27 @@
+<!-- templates/home.html -->
+{% extends "base.html" %}
+{% block title %}AI Business Assistant{% endblock %}
+{% block content %}
+<div class="jumbotron">
+  <h1 class="display-4">Welcome to the AI Business Assistant</h1>
+  <p class="lead">
+    Leverage AI-powered tools to enhance your small business operations.
+  </p>
+  <hr class="my-4" />
+  <p>Select a service below to get started:</p>
+  <ul class="list-group">
+    <li class="list-group-item">
+      <a href="/logo_generator">Logo Generator</a>
+    </li>
+    <li class="list-group-item">
+      <a href="/business_research">Business Research</a>
+    </li>
+    <li class="list-group-item">
+      <a href="/marketing_strategies">Marketing Strategies</a>
+    </li>
+    <li class="list-group-item">
+      <a href="/chatbot_generator">Chatbot Generator</a>
+    </li>
+  </ul>
+</div>
+{% endblock %}

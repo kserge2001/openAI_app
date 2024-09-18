@@ -1,0 +1,53 @@
+<!-- templates/chatbot_generator.html -->
+{% extends "base.html" %}
+{% block title %}Chatbot Generator{% endblock %}
+{% block content %}
+<h1 class="mb-4">Create Your Custom Chatbot</h1>
+<form id="chatbot-form">
+  <div class="form-group">
+    <label for="company_name">Company Name:</label>
+    <input
+      type="text"
+      class="form-control"
+      id="company_name"
+      name="company_name"
+      required
+    />
+  </div>
+  <div class="form-group">
+    <label for="description">Company Description:</label>
+    <textarea
+      class="form-control"
+      id="description"
+      name="description"
+      rows="4"
+      required
+    ></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Generate Chatbot</button>
+</form>
+<div id="result" class="mt-4">
+  <!-- Chatbot embed code will be displayed here -->
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+  document
+    .getElementById("chatbot-form")
+    .addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const company_name = document.getElementById("company_name").value;
+      const description = document.getElementById("description").value;
+      const response = await fetch("/generate_chatbot", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ company_name, description }),
+      });
+      const data = await response.json();
+      document.getElementById("result").innerHTML =
+        '<p>Embed this script on your website:</p><textarea class="form-control" rows="6">' +
+        data.embed_code +
+        "</textarea>";
+    });
+</script>
+{% endblock %}

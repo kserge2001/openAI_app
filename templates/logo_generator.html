@@ -1,0 +1,43 @@
+<!-- templates/logo_generator.html -->
+{% extends "base.html" %}
+{% block title %}AI Logo Generator{% endblock %}
+{% block content %}
+<h1 class="mb-4">AI Logo Generator</h1>
+<form id="logo-form">
+  <div class="form-group">
+    <label for="description">Enter Logo Description:</label>
+    <textarea
+      class="form-control"
+      id="description"
+      name="description"
+      rows="4"
+      required
+    ></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Generate Logo</button>
+</form>
+<div id="result" class="mt-4">
+  <!-- Generated logo will be displayed here -->
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+  document
+    .getElementById("logo-form")
+    .addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const description = document.getElementById("description").value;
+      const response = await fetch("/generate_logo", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ description }),
+      });
+      const data = await response.json();
+      const img = document.createElement("img");
+      img.src = "data:image/png;base64," + data.image;
+      img.classList.add("img-fluid", "mt-4");
+      document.getElementById("result").innerHTML = "";
+      document.getElementById("result").appendChild(img);
+    });
+</script>
+{% endblock %}

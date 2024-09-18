@@ -1,0 +1,40 @@
+<!-- templates/marketing_strategies.html -->
+{% extends "base.html" %}
+{% block title %}Marketing Strategies Generator{% endblock %}
+{% block content %}
+<h1 class="mb-4">Marketing Strategies Generator</h1>
+<form id="strategy-form">
+  <div class="form-group">
+    <label for="domain">Enter Business Domain:</label>
+    <input
+      type="text"
+      class="form-control"
+      id="domain"
+      name="domain"
+      required
+    />
+  </div>
+  <button type="submit" class="btn btn-primary">Get Strategies</button>
+</form>
+<div id="result" class="mt-4">
+  <!-- Strategies will be displayed here -->
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+  document
+    .getElementById("strategy-form")
+    .addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const domain = document.getElementById("domain").value;
+      const response = await fetch("/get_strategies", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ domain }),
+      });
+      const data = await response.json();
+      document.getElementById("result").innerHTML =
+        "<pre>" + data.strategies + "</pre>";
+    });
+</script>
+{% endblock %}
